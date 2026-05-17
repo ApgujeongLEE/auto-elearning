@@ -120,11 +120,16 @@ ln -s ../../../../공용자산/효과음라이브러리 public/sfx
 ### A. 다른 macOS PC (`setup.sh`)
 
 ```bash
-git clone <이 리포 URL>
+# Git LFS 사전 설치 (한 번)
+brew install git-lfs && git lfs install
+
+# 리포 clone (LFS 미디어도 자동 다운)
+git clone https://github.com/<your-id>/auto-elearning.git "Auto E-learning"
 cd "Auto E-learning"
+
+# 도구 자동 설치 (~10-15분)
 bash setup.sh
-# brew, ffmpeg, node@22, whisper-cpp, whisper 모델, playwright 자동 설치 (~10-15분)
-# 끝나면: source ~/.zprofile
+source ~/.zprofile
 ```
 
 이후 평소처럼 `cp -r _템플릿 프로젝트/...` 로 새 프로젝트 시작.
@@ -153,6 +158,49 @@ GitHub 리포에서 **Code → Codespaces → Create codespace** 클릭.
 | Hyperframes | `npx hyperframes` | 동일 |
 
 `도구/sync_patcher`, `도구/verify-playwright` 등 자체 도구는 OS 무관하게 동작.
+
+---
+
+## Git LFS — 원본 미디어 파일 동기화
+
+이 워크스페이스는 **Git LFS**로 원본 녹음 파일(mp4/mp3/m4a/mov)을 동기화한다. 분할 wav·프리뷰 mp4는 재생성 가능하므로 `.gitignore` 처리.
+
+**LFS 트래킹 대상** (`.gitattributes` 참조):
+- 원본 녹음: `*.mp4 *.mp3 *.m4a *.mov`
+- 최종 마스터·납품
+- 에셋: PNG/JPG/PPTX
+- 공용자산: 폰트·로고·BGM·SFX
+
+**LFS 한도 (GitHub 무료 계정)**: 스토리지 1GB, 대역폭 월 1GB. 영상당 평균 ~75MB 가정 시 약 13~15편까지 무료.
+
+**다른 PC에서 clone 시**:
+```bash
+brew install git-lfs && git lfs install   # macOS 한 번
+git clone <repo-url>                       # LFS 파일 자동 다운로드
+```
+
+**Codespaces에서**: `git lfs install` 가 postCreate.sh에서 자동 처리됨.
+
+**새 녹음 push 흐름**:
+```bash
+# 새 mp3/mp4를 04_녹음/원본/ 에 넣은 후
+git add 프로젝트/<NNN>/04_녹음/원본/
+git commit -m "Add 원본 녹음 — NNN"
+git push   # LFS 객체 자동 업로드
+```
+
+---
+
+## 새 주제로 영상 만들기 — 어디서든 동일한 흐름
+
+| 단계 | 실행 위치 | 비고 |
+|---|---|---|
+| 1. 클로드에게 새 주제 요청 | macOS 터미널 / Codespaces VS Code | "X 주제로 N분 영상 기획해줘" |
+| 2. 기획·스크립트·design.md·스토리보드 | 클로드가 자동 작성 | 사용자 검토 |
+| 3. 녹음 (사용자) | 본인 디바이스 | mp3/mp4 |
+| 4. 녹음 파일 업로드 | LFS commit + push (로컬) / VS Code Upload (Codespaces) | 모든 PC에 동기화 |
+| 5. 받아쓰기·분할·sync_patcher·verify | 클로드 자동 실행 | Hyperframes Studio 라이브 검토 |
+| 6. 최종 mp4 렌더 | `npx hyperframes render` | 결과는 LFS push 또는 다운로드 |
 
 ---
 

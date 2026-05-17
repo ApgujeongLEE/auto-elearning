@@ -10,11 +10,16 @@ set -euo pipefail
 echo "🚀 Auto E-learning Codespaces 환경 셋업"
 echo ""
 
-# ---------- 1. apt 패키지 (ffmpeg, build tools) ----------
+# ---------- 1. apt 패키지 (ffmpeg, build tools, git-lfs) ----------
 echo "📦 시스템 패키지 설치..."
 sudo apt-get update -qq
-sudo apt-get install -y -qq ffmpeg build-essential cmake git curl ca-certificates
+sudo apt-get install -y -qq ffmpeg build-essential cmake git git-lfs curl ca-certificates
 echo "✓ ffmpeg: $(ffmpeg -version 2>&1 | head -1)"
+
+# Git LFS 초기화 (이미 clone 된 LFS 파일들 fetch)
+git lfs install
+git lfs pull || true
+echo "✓ git-lfs: $(git lfs version)"
 
 # ---------- 2. whisper.cpp 빌드 ----------
 # Linux용 whisper-cli는 brew가 아니라 소스에서 빌드
