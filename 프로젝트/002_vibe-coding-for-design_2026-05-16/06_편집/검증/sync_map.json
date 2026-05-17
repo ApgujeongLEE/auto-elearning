@@ -1,0 +1,318 @@
+{
+  "transcript": "프로젝트/002_vibe-coding-for-design_2026-05-16/04_녹음/받아쓰기/auto_transcript.srt",
+  "design": "프로젝트/002_vibe-coding-for-design_2026-05-16/03_스토리보드/design.md",
+  "scene_ranges": {
+    "S01": [
+      0.0,
+      10.6
+    ],
+    "S02": [
+      10.6,
+      26.37
+    ],
+    "S03": [
+      26.37,
+      46.91
+    ],
+    "S04": [
+      46.91,
+      63.52
+    ],
+    "S05": [
+      63.52,
+      77.39
+    ],
+    "S06": [
+      77.39,
+      99.28
+    ],
+    "S07": [
+      99.28,
+      116.32
+    ],
+    "S08": [
+      116.32,
+      131.15
+    ],
+    "S09": [
+      131.15,
+      145.76
+    ],
+    "S10": [
+      145.76,
+      160.13
+    ],
+    "S11": [
+      160.13,
+      166.43
+    ]
+  },
+  "rules": [
+    {
+      "scene": "S01",
+      "event_id": "s01-title-in",
+      "trigger_word": "디자",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "VIBE/CODING 타이포 등장",
+      "resolved_time": -0.010000000000000009,
+      "status": "OK"
+    },
+    {
+      "scene": "S01",
+      "event_id": "s01-keyword-bibe",
+      "trigger_word": "바이",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "바이브 코딩 강조",
+      "resolved_time": 7.66,
+      "status": "OK"
+    },
+    {
+      "scene": "S02",
+      "event_id": "s02-karpathy-in",
+      "trigger_word": "카파시",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "Karpathy 카드 등장",
+      "resolved_time": 13.84,
+      "status": "OK"
+    },
+    {
+      "scene": "S02",
+      "event_id": "s02-flow-start",
+      "trigger_word": "자연",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "4단 플로우 시작",
+      "resolved_time": 16.8,
+      "status": "OK"
+    },
+    {
+      "scene": "S03",
+      "event_id": "s03-reason-1",
+      "trigger_word": "속도",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "첫 카드",
+      "resolved_time": 30.13,
+      "status": "OK"
+    },
+    {
+      "scene": "S03",
+      "event_id": "s03-reason-2",
+      "trigger_word": "동작",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "두번째 카드",
+      "resolved_time": 36.93,
+      "status": "OK"
+    },
+    {
+      "scene": "S03",
+      "event_id": "s03-reason-3",
+      "trigger_word": "콘셉트",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "세번째 카드",
+      "resolved_time": 42.099999999999994,
+      "status": "OK"
+    },
+    {
+      "scene": "S04",
+      "event_id": "s04-tool-v0",
+      "trigger_word": "V0",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "v0 카드",
+      "resolved_time": 50.4,
+      "status": "OK"
+    },
+    {
+      "scene": "S04",
+      "event_id": "s04-tool-cursor",
+      "trigger_word": "커서",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "Cursor 카드",
+      "resolved_time": 56.47,
+      "status": "OK"
+    },
+    {
+      "scene": "S04",
+      "event_id": "s04-tool-bolt",
+      "trigger_word": "볼트",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "Bolt 카드",
+      "resolved_time": 59.68,
+      "status": "OK"
+    },
+    {
+      "scene": "S05",
+      "event_id": "s05-num-callout",
+      "trigger_word": "10배",
+      "match_strategy": "scene",
+      "offset": -0.3,
+      "intent": "10× 카운트업 시작",
+      "resolved_time": 72.58,
+      "status": "OK"
+    },
+    {
+      "scene": "S05",
+      "event_id": "s05-bars-start",
+      "trigger_word": "짧아",
+      "match_strategy": "scene",
+      "offset": -0.4,
+      "intent": "막대 grow 시작",
+      "resolved_time": 73.88,
+      "status": "OK"
+    },
+    {
+      "scene": "S06",
+      "event_id": "s06-traditional",
+      "trigger_word": "전통",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "좌측 시작",
+      "resolved_time": 77.19,
+      "status": "OK"
+    },
+    {
+      "scene": "S06",
+      "event_id": "s06-vibe-flow",
+      "trigger_word": "바이",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "우측 시작",
+      "resolved_time": 88.86,
+      "status": "OK"
+    },
+    {
+      "scene": "S07",
+      "event_id": "s07-figma",
+      "trigger_word": "피금",
+      "match_strategy": "scene",
+      "offset": -0.3,
+      "intent": "Figma panel",
+      "resolved_time": 101.73,
+      "status": "OK"
+    },
+    {
+      "scene": "S07",
+      "event_id": "s07-result",
+      "trigger_word": "리액트",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "결과 panel",
+      "resolved_time": 108.11999999999999,
+      "status": "OK"
+    },
+    {
+      "scene": "S08",
+      "event_id": "s08-prompt-typing",
+      "trigger_word": "데시",
+      "match_strategy": "scene",
+      "offset": -0.3,
+      "intent": "타이프라이터 시작",
+      "resolved_time": 118.66,
+      "status": "OK"
+    },
+    {
+      "scene": "S08",
+      "event_id": "s08-ui-appear",
+      "trigger_word": "넌트",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "UI 결과",
+      "resolved_time": 127.07,
+      "status": "OK"
+    },
+    {
+      "scene": "S09",
+      "event_id": "s09-skill-1",
+      "trigger_word": "프프트",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "Prompt 칩",
+      "resolved_time": 136.96,
+      "status": "OK"
+    },
+    {
+      "scene": "S09",
+      "event_id": "s09-skill-2",
+      "trigger_word": "평가",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "Evaluation 칩",
+      "resolved_time": 139.27,
+      "status": "OK"
+    },
+    {
+      "scene": "S09",
+      "event_id": "s09-skill-3",
+      "trigger_word": "시스",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "Design System 칩",
+      "resolved_time": 142.21,
+      "status": "OK"
+    },
+    {
+      "scene": "S10",
+      "event_id": "s10-warn-in",
+      "trigger_word": "물론",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "warning 등장",
+      "resolved_time": 145.56,
+      "status": "OK"
+    },
+    {
+      "scene": "S11",
+      "event_id": "s11-closing",
+      "trigger_word": "경계",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "마무리 카피",
+      "resolved_time": 159.3,
+      "status": "OK"
+    },
+    {
+      "scene": "S11",
+      "event_id": "s11-cta-card",
+      "trigger_word": "다음영상",
+      "match_strategy": "scene",
+      "offset": -0.2,
+      "intent": "CTA 카드",
+      "resolved_time": 162.08,
+      "status": "OK"
+    }
+  ],
+  "resolved": {
+    "s01-title-in": -0.01,
+    "s01-keyword-bibe": 7.66,
+    "s02-karpathy-in": 13.84,
+    "s02-flow-start": 16.8,
+    "s03-reason-1": 30.13,
+    "s03-reason-2": 36.93,
+    "s03-reason-3": 42.1,
+    "s04-tool-v0": 50.4,
+    "s04-tool-cursor": 56.47,
+    "s04-tool-bolt": 59.68,
+    "s05-num-callout": 72.58,
+    "s05-bars-start": 73.88,
+    "s06-traditional": 77.19,
+    "s06-vibe-flow": 88.86,
+    "s07-figma": 101.73,
+    "s07-result": 108.12,
+    "s08-prompt-typing": 118.66,
+    "s08-ui-appear": 127.07,
+    "s09-skill-1": 136.96,
+    "s09-skill-2": 139.27,
+    "s09-skill-3": 142.21,
+    "s10-warn-in": 145.56,
+    "s11-closing": 159.3,
+    "s11-cta-card": 162.08
+  }
+}

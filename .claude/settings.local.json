@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(brew --version)",
+      "Bash(/usr/bin/afinfo \"2026-05-16_take01.mp4\")",
+      "Read(//opt/homebrew/bin/**)",
+      "Read(//usr/local/bin/**)",
+      "Read(//opt/**)",
+      "Bash(awk '/^[0-9]+:/ {ts=$0; getline txt; print ts \" | \" txt}' auto_transcript.srt)",
+      "Bash(cat /tmp/hf-test/compositions/scene1-logo-intro.html 2>/dev/null | head -60)",
+      "Bash(cat /tmp/hf-test/index.html | sed -n '60,180p')",
+      "Bash(curl -s http://localhost:3002/index.html)",
+      "Bash(curl -s http://localhost:3002/api/project)",
+      "Bash(curl -s http://localhost:3002/canvas)",
+      "Bash(curl -s \"http://localhost:3002/api/canvas?path=index.html\")",
+      "Bash(curl -s http://localhost:3002/compositions/index.html)",
+      "Bash(curl -s http://localhost:3002/comp/index.html)",
+      "Bash(curl -s http://localhost:3002/preview/index.html)",
+      "Bash(curl -sI http://localhost:3002/)",
+      "Bash(python3 도구/sync_patcher/sync_patcher.py --transcript 프로젝트/001_agentic-ai_2026-05-15/04_녹음/받아쓰기/auto_transcript.srt --design 프로젝트/001_agentic-ai_2026-05-15/03_스토리보드/design.md --gsap 프로젝트/001_agentic-ai_2026-05-15/06_편집/hyperframes/index.html --sync-map 프로젝트/001_agentic-ai_2026-05-15/06_편집/검증/sync_map.json --dry-run)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('프로젝트/001_agentic-ai_2026-05-15/06_편집/검증/sync_map.json'\\)\\); print\\(json.dumps\\(d['resolved'], indent=2, ensure_ascii=False\\)\\)\")",
+      "Bash(python3)",
+      "Bash(python3 도구/sync_patcher/sync_patcher.py --transcript 프로젝트/002_vibe-coding-for-design_2026-05-16/04_녹음/받아쓰기/auto_transcript.srt --design 프로젝트/002_vibe-coding-for-design_2026-05-16/03_스토리보드/design.md --gsap 프로젝트/002_vibe-coding-for-design_2026-05-16/06_편집/hyperframes/index.html --sync-map 프로젝트/002_vibe-coding-for-design_2026-05-16/06_편집/검증/sync_map.json --dry-run)",
+      "Bash(python3 도구/sync_patcher/sync_patcher.py --transcript 프로젝트/002_vibe-coding-for-design_2026-05-16/04_녹음/받아쓰기/auto_transcript.srt --design 프로젝트/002_vibe-coding-for-design_2026-05-16/03_스토리보드/design.md --gsap 프로젝트/002_vibe-coding-for-design_2026-05-16/06_편집/hyperframes/index.html --sync-map /tmp/sync_map_test.json --dry-run)",
+      "Bash(python3 도구/sync_patcher/sync_patcher.py --transcript 프로젝트/002_vibe-coding-for-design_2026-05-16/04_녹음/받아쓰기/auto_transcript.srt --design 프로젝트/002_vibe-coding-for-design_2026-05-16/03_스토리보드/design.md --gsap 프로젝트/002_vibe-coding-for-design_2026-05-16/06_편집/hyperframes/index.html --sync-map 프로젝트/002_vibe-coding-for-design_2026-05-16/06_편집/검증/sync_map.json)",
+      "Bash(chmod +x \"/Users/Y.K/Desktop/Auto E-learning/setup.sh\")",
+      "Bash(chmod +x \"/Users/Y.K/Desktop/Auto E-learning/.devcontainer/postCreate.sh\")",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)"
+    ]
+  }
+}

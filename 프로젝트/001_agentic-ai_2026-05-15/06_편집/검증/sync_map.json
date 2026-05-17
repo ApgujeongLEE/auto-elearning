@@ -1,0 +1,109 @@
+{
+  "transcript": "프로젝트/001_agentic-ai_2026-05-15/04_녹음/받아쓰기/auto_transcript.srt",
+  "design": "프로젝트/001_agentic-ai_2026-05-15/03_스토리보드/design.md",
+  "scene_ranges": {
+    "S01": [
+      0.0,
+      10.1
+    ],
+    "S02": [
+      10.1,
+      22.0
+    ],
+    "S03": [
+      22.0,
+      31.8
+    ],
+    "S04": [
+      31.8,
+      44.5
+    ],
+    "S05": [
+      44.5,
+      54.86
+    ],
+    "S06": [
+      54.86,
+      58.86
+    ]
+  },
+  "rules": [
+    {
+      "scene": "S01",
+      "event_id": "s01-check-in",
+      "trigger_word": "알아서",
+      "match_strategy": "scene",
+      "offset": 0.0,
+      "intent": "\"✓\" 등장이 \"알아서\" 발화 순간과 동시",
+      "resolved_time": 4.86,
+      "status": "OK"
+    },
+    {
+      "scene": "S01",
+      "event_id": "s01-subcopy-in",
+      "trigger_word": "8분",
+      "match_strategy": "scene",
+      "offset": -0.1,
+      "intent": "서브카피가 \"8분만 보시면\" 살짝 전에",
+      "resolved_time": null,
+      "status": "UNRESOLVED"
+    },
+    {
+      "scene": "S02",
+      "event_id": "s02-title-in",
+      "trigger_word": "에이전틱",
+      "match_strategy": "scene",
+      "offset": 0.0,
+      "intent": "타이틀이 \"에이전틱 AI\" 발화와 동시",
+      "resolved_time": 11.21,
+      "status": "OK"
+    },
+    {
+      "scene": "S03",
+      "event_id": "s03-card-1-on",
+      "trigger_word": "계획",
+      "match_strategy": "scene",
+      "offset": 0.0,
+      "intent": "카드 1 활성화 = \"계획\" 발화",
+      "resolved_time": 24.43,
+      "status": "OK"
+    },
+    {
+      "scene": "S03",
+      "event_id": "s03-card-2-on",
+      "trigger_word": "도구",
+      "match_strategy": "scene",
+      "offset": 0.0,
+      "intent": "카드 2 활성화 = \"도구\" 발화",
+      "resolved_time": 26.05,
+      "status": "OK"
+    },
+    {
+      "scene": "S03",
+      "event_id": "s03-card-3-on",
+      "trigger_word": "기억",
+      "match_strategy": "scene",
+      "offset": 0.0,
+      "intent": "카드 3 활성화 = \"기억\" 발화",
+      "resolved_time": 27.66,
+      "status": "OK"
+    },
+    {
+      "scene": "S03",
+      "event_id": "s03-card-4-on",
+      "trigger_word": "점검",
+      "match_strategy": "scene",
+      "offset": 0.0,
+      "intent": "카드 4 활성화 = \"점검\" 발화",
+      "resolved_time": null,
+      "status": "UNRESOLVED"
+    }
+  ],
+  "resolved": {
+    "s01-check-in": 4.86,
+    "s02-title-in": 11.21,
+    "s03-card-1-on": 24.43,
+    "s03-card-2-on": 26.05,
+    "s03-card-3-on": 27.66
+  }
+}

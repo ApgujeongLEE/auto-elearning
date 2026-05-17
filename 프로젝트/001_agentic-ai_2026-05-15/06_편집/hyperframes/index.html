@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px; height: 1080px;
+        overflow: hidden;
+        background: #000;
+        font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+        color: #1F2937;
+      }
+
+      .scene {
+        position: absolute; top: 0; left: 0;
+        width: 1920px; height: 1080px;
+        opacity: 0;
+        overflow: hidden;
+      }
+
+      .logo-wm {
+        position: absolute; top: 48px; right: 48px;
+        font-weight: 900; font-size: 28px;
+        letter-spacing: -0.5px; opacity: 0.3;
+        color: #1F2937; z-index: 100;
+      }
+      .logo-wm.light { color: #FFFFFF; }
+
+      .subtitle-bar {
+        position: absolute; left: 0; right: 0; bottom: 96px;
+        display: flex; justify-content: center; z-index: 90;
+        opacity: 0;
+      }
+      .subtitle-inner {
+        background: rgba(0,0,0,0.6); color: #FFFFFF;
+        font-size: 44px; font-weight: 500;
+        padding: 12px 24px; border-radius: 6px;
+        max-width: 1400px; text-align: center;
+        line-height: 1.3;
+      }
+
+      /* ============================= S01 ============================= */
+      #scene-s01 { background: linear-gradient(135deg, #DBEAFE 0%, #F8F9FA 100%); }
+      #scene-s01 .hero-symbol {
+        position: absolute; left: 50%; top: 38%;
+        transform: translate(-50%, -50%);
+        font-size: 360px; font-weight: 900;
+        color: #2563EB; line-height: 1; opacity: 0;
+      }
+      #scene-s01 .hero-symbol.check { color: #FACC15; }
+      #scene-s01 .subcopy {
+        position: absolute; left: 50%; top: 70%;
+        transform: translate(-50%, 0);
+        font-size: 64px; font-weight: 700;
+        color: #1F2937; white-space: nowrap; opacity: 0;
+      }
+
+      /* ============================= S02 ============================= */
+      #scene-s02 { background: #F8F9FA; }
+      #scene-s02 .title-top {
+        position: absolute; top: 80px; left: 50%;
+        transform: translateX(-50%);
+        font-size: 72px; font-weight: 900;
+        color: #2563EB; opacity: 0;
+      }
+      #scene-s02 .panels {
+        position: absolute; top: 240px; left: 0; right: 0;
+        display: flex; justify-content: center; gap: 80px;
+        padding: 0 100px;
+      }
+      #scene-s02 .panel {
+        width: 760px; height: 600px; border-radius: 24px;
+        padding: 48px; position: relative; opacity: 0;
+      }
+      #scene-s02 .panel-left { background: #F3F4F6; border: 2px solid #D1D5DB; }
+      #scene-s02 .panel-right { background: #EFF6FF; border: 2px solid #2563EB; }
+      #scene-s02 .panel-label { font-size: 36px; font-weight: 700; margin-bottom: 32px; }
+      #scene-s02 .panel-left .panel-label { color: #6B7280; }
+      #scene-s02 .panel-right .panel-label { color: #2563EB; }
+      #scene-s02 .qa-flow {
+        display: flex; align-items: center; justify-content: center;
+        gap: 32px; height: 380px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 88px; font-weight: 700; color: #6B7280;
+      }
+      #scene-s02 .pipeline {
+        display: flex; flex-direction: column; gap: 16px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 52px; font-weight: 700; color: #2563EB;
+        margin-top: 32px;
+      }
+      #scene-s02 .pipeline-step { opacity: 0; }
+
+      /* ============================= S03 ============================= */
+      #scene-s03 { background: #F8F9FA; }
+      #scene-s03 .title-top {
+        position: absolute; top: 90px; left: 50%;
+        transform: translateX(-50%);
+        font-size: 72px; font-weight: 700; color: #1F2937; opacity: 0;
+      }
+      #scene-s03 .grid {
+        position: absolute; top: 260px; left: 50%;
+        transform: translateX(-50%);
+        display: grid;
+        grid-template-columns: repeat(2, 540px);
+        grid-template-rows: repeat(2, 280px);
+        gap: 40px;
+      }
+      #scene-s03 .card {
+        background: #F3F4F6;
+        border: 3px solid #D1D5DB;
+        border-radius: 32px;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 16px; color: #6B7280; opacity: 0;
+      }
+      #scene-s03 .card-icon { font-size: 110px; line-height: 1; }
+      #scene-s03 .card-label { font-size: 48px; font-weight: 700; }
+
+      /* ============================= S04 ============================= */
+      #scene-s04 { background: #111827; color: #FFFFFF; }
+      #scene-s04 .gartner {
+        position: absolute; top: 120px; left: 50%;
+        transform: translateX(-50%);
+        font-size: 80px; font-weight: 900;
+        color: #FACC15; letter-spacing: -1px; opacity: 0;
+      }
+      #scene-s04 .num-callout {
+        position: absolute; top: 240px; left: 50%;
+        transform: translateX(-50%);
+        font-size: 320px; font-weight: 900;
+        color: #FACC15; line-height: 1;
+        font-family: 'JetBrains Mono', monospace;
+        letter-spacing: -8px; opacity: 0;
+      }
+      #scene-s04 .caption {
+        position: absolute; top: 605px; left: 50%;
+        transform: translateX(-50%);
+        font-size: 32px; font-weight: 500; color: #FFFFFF;
+        opacity: 0; text-align: center; letter-spacing: 0.5px;
+      }
+      #scene-s04 .chart {
+        position: absolute; left: 50%;
+        transform: translateX(-50%);
+        top: 705px; width: 1100px;
+        display: flex; flex-direction: column; gap: 14px;
+      }
+      #scene-s04 .bar-row { display: flex; align-items: center; gap: 24px; }
+      #scene-s04 .bar-year {
+        width: 100px; font-size: 32px; font-weight: 700;
+        color: #FFFFFF; opacity: 0.7; text-align: right;
+      }
+      #scene-s04 .bar-track {
+        flex: 1; height: 36px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 8px; overflow: hidden;
+      }
+      #scene-s04 .bar-fill {
+        height: 100%; width: 0%;
+        background: #FACC15; border-radius: 8px; opacity: 0.5;
+      }
+      #scene-s04 .bar-row.cur .bar-fill { opacity: 1; }
+      #scene-s04 .source {
+        position: absolute; bottom: 32px; right: 48px;
+        font-size: 18px; color: rgba(255,255,255,0.4);
+        font-style: italic;
+      }
+
+      /* ============================= S05 ============================= */
+      #scene-s05 { background: #F8F9FA; }
+      #scene-s05 .grid {
+        position: absolute; top: 200px; left: 50%;
+        transform: translateX(-50%);
+        display: grid;
+        grid-template-columns: repeat(2, 540px);
+        grid-template-rows: repeat(2, 220px);
+        gap: 40px;
+      }
+      #scene-s05 .pcard {
+        background: #FFFFFF;
+        border: 2px solid #D1D5DB;
+        border-radius: 24px;
+        padding: 36px 40px;
+        display: flex; flex-direction: column;
+        justify-content: center; gap: 12px; opacity: 0;
+      }
+      #scene-s05 .pcard-name { font-size: 44px; font-weight: 800; color: #1F2937; }
+      #scene-s05 .pcard-desc { font-size: 28px; font-weight: 500; color: #6B7280; }
+      #scene-s05 .closing {
+        position: absolute; left: 50%; top: 740px;
+        transform: translate(-50%, 0);
+        font-size: 88px; font-weight: 900;
+        color: #2563EB; white-space: nowrap;
+        letter-spacing: -2px; opacity: 0;
+      }
+
+      /* ============================= S06 ============================= */
+      #scene-s06 { background: #F8F9FA; }
+      #scene-s06 .stack {
+        position: absolute; left: 50%; top: 50%;
+        transform: translate(-50%, -50%);
+        display: flex; flex-direction: column;
+        align-items: center; gap: 40px; text-align: center;
+      }
+      #scene-s06 .big-logo {
+        font-size: 96px; font-weight: 900;
+        color: #2563EB; letter-spacing: -3px; opacity: 0;
+      }
+      #scene-s06 .main-copy {
+        font-size: 72px; font-weight: 800;
+        color: #1F2937; line-height: 1.2; opacity: 0;
+      }
+      #scene-s06 .cta-row { display: flex; gap: 48px; margin-top: 24px; }
+      #scene-s06 .cta-chip {
+        display: inline-flex; align-items: center; gap: 16px;
+        padding: 20px 36px; border-radius: 100px;
+        background: #FFFFFF; border: 2px solid #D1D5DB;
+        font-size: 36px; font-weight: 700; color: #1F2937; opacity: 0;
+      }
+      #scene-s06 .cta-icon { font-size: 44px; line-height: 1; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="58.86"
+      data-width="1920"
+      data-height="1080"
+    >
+      <audio
+        id="audio-main"
+        class="clip"
+        src="./assets/audio/video_audio.wav"
+        data-start="0"
+        data-duration="58.86"
+        data-track-index="0"
+        data-has-audio="true"
+        data-volume="1.0"
+      ></audio>
+
+      <!-- ================ S01 ================ -->
+      <div id="scene-s01" class="scene" data-track-skip="true" data-orig-start="0.00" data-duration="10.10" data-track-index="1">
+        <div class="logo-wm">AUTO E-LEARNING</div>
+        <div id="s01-q" class="hero-symbol">?</div>
+        <div id="s01-check" class="hero-symbol check">✓</div>
+        <div id="s01-subcopy" class="subcopy">AI가 알아서 다 해준다면?</div>
+      </div>
+
+      <!-- ================ S02 ================ -->
+      <div id="scene-s02" class="scene" data-track-skip="true" data-orig-start="10.10" data-duration="11.90" data-track-index="1">
+        <div class="logo-wm">AUTO E-LEARNING</div>
+        <div id="s02-title" class="title-top">에이전틱 AI</div>
+        <div class="panels">
+          <div id="s02-left" class="panel panel-left">
+            <div class="panel-label">기존 챗봇</div>
+            <div class="qa-flow"><span>Q</span><span>→</span><span>A</span></div>
+          </div>
+          <div id="s02-right" class="panel panel-right">
+            <div class="panel-label">에이전틱 AI</div>
+            <div class="pipeline">
+              <div class="pipeline-step" data-step="1">Goal</div>
+              <div class="pipeline-step" data-step="2">↓ Plan</div>
+              <div class="pipeline-step" data-step="3">↓ Tool</div>
+              <div class="pipeline-step" data-step="4">↓ Tool</div>
+              <div class="pipeline-step" data-step="5">↓ Result</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================ S03 ================ -->
+      <div id="scene-s03" class="scene" data-track-skip="true" data-orig-start="22.00" data-duration="9.80" data-track-index="1">
+        <div class="logo-wm">AUTO E-LEARNING</div>
+        <div id="s03-title" class="title-top">핵심은 네 가지</div>
+        <div class="grid">
+          <div id="s03-card-1" class="card"><div class="card-icon">📋</div><div class="card-label">계획</div></div>
+          <div id="s03-card-2" class="card"><div class="card-icon">🔧</div><div class="card-label">도구</div></div>
+          <div id="s03-card-3" class="card"><div class="card-icon">🧠</div><div class="card-label">기억</div></div>
+          <div id="s03-card-4" class="card"><div class="card-icon">🔍</div><div class="card-label">점검</div></div>
+        </div>
+      </div>
+
+      <!-- ================ S04 ================ -->
+      <div id="scene-s04" class="scene" data-track-skip="true" data-orig-start="31.80" data-duration="12.70" data-track-index="1">
+        <div class="logo-wm light">AUTO E-LEARNING</div>
+        <div id="s04-gartner" class="gartner">GARTNER</div>
+        <div id="s04-num" class="num-callout">#1</div>
+        <div id="s04-caption" class="caption">Strategic Tech Trends 2025</div>
+        <div class="chart">
+          <div class="bar-row" data-bar="1"><div class="bar-year">2023</div><div class="bar-track"><div class="bar-fill"></div></div></div>
+          <div class="bar-row" data-bar="2"><div class="bar-year">2024</div><div class="bar-track"><div class="bar-fill"></div></div></div>
+          <div class="bar-row cur" data-bar="3"><div class="bar-year">2025</div><div class="bar-track"><div class="bar-fill"></div></div></div>
+        </div>
+        <div class="source">Directional illustration. Source: Industry reports</div>
+      </div>
+
+      <!-- ================ S05 ================ -->
+      <div id="scene-s05" class="scene" data-track-skip="true" data-orig-start="44.50" data-duration="10.36" data-track-index="1">
+        <div class="logo-wm">AUTO E-LEARNING</div>
+        <div class="grid">
+          <div id="s05-card-1" class="pcard"><div class="pcard-name">Claude Code</div><div class="pcard-desc">코드를 직접 짜는</div></div>
+          <div id="s05-card-2" class="pcard"><div class="pcard-name">Operator</div><div class="pcard-desc">컴퓨터를 조작하는</div></div>
+          <div id="s05-card-3" class="pcard"><div class="pcard-name">Copilot</div><div class="pcard-desc">업무 도우미</div></div>
+          <div id="s05-card-4" class="pcard"><div class="pcard-name">Gemini Agent</div><div class="pcard-desc">검색·실행 자동화</div></div>
+        </div>
+        <div id="s05-closing" class="closing">이미 우리 곁에 와 있어요</div>
+      </div>
+
+      <!-- ================ S06 ================ -->
+      <div id="scene-s06" class="scene" data-track-skip="true" data-orig-start="54.86" data-duration="4.00" data-track-index="1">
+        <div class="stack">
+          <div id="s06-logo" class="big-logo">AUTO E-LEARNING</div>
+          <div id="s06-copy" class="main-copy">다음 영상에서 직접 만들어 볼까요?</div>
+          <div class="cta-row">
+            <div id="s06-cta-1" class="cta-chip"><span class="cta-icon">👍</span><span>구독</span></div>
+            <div id="s06-cta-2" class="cta-chip"><span class="cta-icon">▶</span><span>다음 영상</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================ Global subtitle bar ================ -->
+      <div id="subtitle-bar" class="subtitle-bar">
+        <div id="subtitle-text" class="subtitle-inner"></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      const sub = document.querySelector("#subtitle-text");
+      const subBar = document.querySelector("#subtitle-bar");
+
+      // ============= Scene activation (opacity 0↔1) =============
+      const scenes = [
+        { id: "#scene-s01", in: 0.00,  out: 10.10 },
+        { id: "#scene-s02", in: 10.10, out: 22.00 },
+        { id: "#scene-s03", in: 22.00, out: 31.80 },
+        { id: "#scene-s04", in: 31.80, out: 44.50 },
+        { id: "#scene-s05", in: 44.50, out: 54.86 },
+        { id: "#scene-s06", in: 54.86, out: 58.86 }
+      ];
+      scenes.forEach(s => {
+        tl.set(s.id, { opacity: 1 }, s.in);
+        tl.set(s.id, { opacity: 0 }, s.out);
+      });
+
+      // ============= S01 (0.00 ~ 10.10) =============
+      tl.fromTo("#s01-q", { opacity: 0, scale: 0, rotation: -180 },
+        { opacity: 1, scale: 1, rotation: 0, duration: 0.5, ease: "back.out(1.7)" }, 0.3);
+      tl.to("#s01-q", { opacity: 0, duration: 0.3 }, 3.5);
+      tl.fromTo("#s01-check", { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.7)" }, 3.8);
+      tl.to("#s01-check", { opacity: 0, duration: 0.4 }, 9.7);
+      tl.fromTo("#s01-subcopy", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 6.0);
+      tl.to("#s01-subcopy", { opacity: 0, duration: 0.4 }, 9.7);
+
+      // ============= S02 (10.10 ~ 22.00) =============
+      tl.fromTo("#s02-title", { opacity: 0, y: -30, scale: 0.85 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.5)" }, 10.60);
+      tl.fromTo("#s02-left", { opacity: 0, x: -60 },
+        { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 11.60);
+      tl.fromTo("#s02-right", { opacity: 0, x: 60 },
+        { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 14.60);
+      tl.to("#scene-s02 [data-step='1']", { opacity: 1, duration: 0.4 }, 15.10);
+      tl.to("#scene-s02 [data-step='2']", { opacity: 1, duration: 0.4 }, 15.70);
+      tl.to("#scene-s02 [data-step='3']", { opacity: 1, duration: 0.4 }, 16.30);
+      tl.to("#scene-s02 [data-step='4']", { opacity: 1, duration: 0.4 }, 16.90);
+      tl.to("#scene-s02 [data-step='5']", { opacity: 1, duration: 0.4 }, 17.50);
+      tl.to(["#s02-left", "#s02-right", "#s02-title"], { opacity: 0, duration: 0.4 }, 21.50);
+
+      // ============= S03 (22.00 ~ 31.80) =============
+      tl.fromTo("#s03-title", { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 22.20);
+      tl.fromTo("#s03-card-1", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" }, 23.20);
+      tl.fromTo("#s03-card-2", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" }, 23.40);
+      tl.fromTo("#s03-card-3", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" }, 23.60);
+      tl.fromTo("#s03-card-4", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" }, 23.80);
+      // Card activation timing (실측 발화 시점 기반)
+      const activations = [
+        { sel: "#s03-card-1", t: 24.70 },
+        { sel: "#s03-card-2", t: 26.05 },
+        { sel: "#s03-card-3", t: 27.66 },
+        { sel: "#s03-card-4", t: 29.83 }
+      ];
+      activations.forEach(a => {
+        tl.to(a.sel, { scale: 1.08, duration: 0.15, ease: "power2.out" }, a.t);
+        tl.to(a.sel, { scale: 1.0, backgroundColor: "#2563EB", borderColor: "#2563EB", color: "#FFFFFF", duration: 0.3, ease: "power2.inOut", overwrite: "auto" }, a.t + 0.16);
+      });
+
+      // ============= S04 (31.80 ~ 44.50) =============
+      tl.fromTo("#s04-gartner", { opacity: 0, y: -20, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.5)" }, 34.30);
+      tl.fromTo("#s04-num", { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)" }, 36.80);
+      tl.fromTo("#s04-caption", { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 37.60);
+      tl.to("#scene-s04 [data-bar='1'] .bar-fill", { width: "30%", duration: 0.6, ease: "power2.out" }, 39.30);
+      tl.to("#scene-s04 [data-bar='2'] .bar-fill", { width: "55%", duration: 0.6, ease: "power2.out" }, 39.90);
+      tl.to("#scene-s04 [data-bar='3'] .bar-fill", { width: "85%", duration: 0.6, ease: "power2.out" }, 40.50);
+
+      // ============= S05 (44.50 ~ 54.86) =============
+      tl.fromTo("#s05-card-1", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" }, 45.00);
+      tl.fromTo("#s05-card-2", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" }, 47.00);
+      tl.fromTo("#s05-card-3", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" }, 48.00);
+      tl.fromTo("#s05-card-4", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" }, 49.00);
+      tl.to("#scene-s05 .pcard", { opacity: 0.4, duration: 0.4 }, 51.50);
+      tl.fromTo("#s05-closing", { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 51.70);
+
+      // ============= S06 (54.86 ~ 58.86) =============
+      tl.fromTo("#s06-logo", { opacity: 0, y: -20, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 54.86);
+      tl.fromTo("#s06-copy", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 55.16);
+      tl.fromTo("#s06-cta-1", { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "back.out(1.4)" }, 56.86);
+      tl.fromTo("#s06-cta-2", { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "back.out(1.4)" }, 57.06);
+      tl.to(["#s06-logo", "#s06-copy", "#s06-cta-1", "#s06-cta-2"], { opacity: 0, duration: 0.4 }, 58.40);
+
+      // ============= Global subtitle (text swaps via .set()) =============
+      tl.to(subBar, { opacity: 1, duration: 0.2 }, 0.0);
+      // S01 subtitles
+      tl.set(sub, { innerText: "여러분이 AI에게 일을 시켰는데," }, 0.0);
+      tl.set(sub, { innerText: "알아서 계획 세우고, 도구도 쓰고," }, 4.9);
+      tl.set(sub, { innerText: "결과까지 가져온다면 어떨까요?" }, 7.7);
+      // S02 subtitles
+      tl.set(sub, { innerText: "이게 바로 에이전틱 AI예요." }, 10.10);
+      tl.set(sub, { innerText: "기존 챗봇이 질문 하나에 답 하나라면," }, 13.48);
+      tl.set(sub, { innerText: "에이전틱 AI는 목표 하나에" }, 17.21);
+      tl.set(sub, { innerText: "스스로 여러 단계를 실행해요." }, 19.58);
+      // S03 subtitles
+      tl.set(sub, { innerText: "핵심은 네 가지예요." }, 22.00);
+      tl.set(sub, { innerText: "계획을 세우고, 도구를 쓰고," }, 24.43);
+      tl.set(sub, { innerText: "기억을 유지하면서," }, 27.66);
+      tl.set(sub, { innerText: "스스로 점검까지 해요." }, 29.83);
+      // S04 subtitles
+      tl.set(sub, { innerText: "세계적인 IT 컨설팅사 가트너는," }, 31.80);
+      tl.set(sub, { innerText: "2025년 가장 중요한 기술 트렌드" }, 34.61);
+      tl.set(sub, { innerText: "1위로 에이전틱 AI를 꼽았어요." }, 38.83);
+      tl.set(sub, { innerText: "시장도 빠르게 커지고 있고요." }, 42.14);
+      // S05 subtitles
+      tl.set(sub, { innerText: "코드를 직접 짜는 클로드 코드," }, 44.50);
+      tl.set(sub, { innerText: "컴퓨터를 조작하는 에이전트," }, 47.84);
+      tl.set(sub, { innerText: "업무를 대신하는 도우미들." }, 49.76);
+      tl.set(sub, { innerText: "이미 우리 곁에 와 있어요." }, 51.70);
+      // S06 subtitle
+      tl.set(sub, { innerText: "다음 영상에서 직접 만들어 볼까요?" }, 54.86);
+      tl.to(subBar, { opacity: 0, duration: 0.3 }, 58.40);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

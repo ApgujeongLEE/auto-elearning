@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/TextPlugin.min.js"></script>
+    <style>
+      /* ===== Google Fonts: Sans Display / Sans Text / Roboto Mono / Material Symbols ===== */
+      @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css");
+      @import url("https://fonts.googleapis.com/css2?family=Google+Sans+Display:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0&display=block");
+
+      /* ===== Material Design 3 (Dark Theme) Color Tokens ===== */
+      :root {
+        --md-surface: #141218;
+        --md-surface-dim: #141218;
+        --md-surface-bright: #3B383E;
+        --md-surface-container-lowest: #0F0D13;
+        --md-surface-container-low: #1D1B20;
+        --md-surface-container: #211F26;
+        --md-surface-container-high: #2B2930;
+        --md-surface-container-highest: #36343B;
+
+        --md-primary: #D0BCFF;
+        --md-on-primary: #381E72;
+        --md-primary-container: #4F378B;
+        --md-on-primary-container: #EADDFF;
+        --md-secondary: #CCC2DC;
+        --md-on-secondary: #332D41;
+        --md-secondary-container: #4A4458;
+        --md-on-secondary-container: #E8DEF8;
+        --md-tertiary: #EFB8C8;
+        --md-tertiary-container: #633B48;
+        --md-on-tertiary-container: #FFD8E4;
+
+        --md-on-surface: #E6E0E9;
+        --md-on-surface-variant: #CAC4D0;
+        --md-outline: #938F99;
+        --md-outline-variant: #49454F;
+
+        --md-accent-success: #9DCC8A;
+        --md-accent-warning: #FFB870;
+        --md-accent-info: #A8C7FA;
+
+        --md-grad-primary: linear-gradient(135deg, #D0BCFF 0%, #B69DF8 50%, #9A82DB 100%);
+        --md-grad-vibrant: linear-gradient(135deg, #D0BCFF 0%, #EFB8C8 100%);
+        --md-grad-stat: linear-gradient(135deg, #FFB870 0%, #D0BCFF 50%, #A8C7FA 100%);
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px; height: 1080px;
+        overflow: hidden;
+        background: var(--md-surface);
+        font-family: 'Pretendard Variable', 'Google Sans Text', sans-serif;
+        color: var(--md-on-surface);
+        letter-spacing: -0.01em;
+      }
+
+      .mesh-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1400px 900px at 15% 25%, rgba(208,188,255,0.10), transparent 65%),
+          radial-gradient(ellipse 1000px 800px at 85% 75%, rgba(239,184,200,0.06), transparent 60%);
+        pointer-events: none;
+      }
+
+      .scene { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; opacity: 0; overflow: hidden; }
+
+      /* Material Symbols */
+      .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal; font-style: normal;
+        font-size: 48px; line-height: 1;
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        display: inline-block; vertical-align: middle;
+      }
+
+      /* Logo (M3 wordmark) */
+      .logo-wm {
+        position: absolute; top: 48px; right: 48px;
+        font-family: 'Google Sans Text', sans-serif;
+        font-weight: 700; font-size: 22px;
+        letter-spacing: 0.05em;
+        opacity: 0.45;
+        color: var(--md-on-surface-variant);
+        z-index: 100;
+        display: flex; align-items: center; gap: 8px;
+      }
+      .logo-wm .material-symbols-outlined { font-size: 22px; color: var(--md-primary); opacity: 0.7; }
+
+      /* Subtitle bar (M3 surface-container-high glass) */
+      .subtitle-bar { position: absolute; left: 0; right: 0; bottom: 96px; display: flex; justify-content: center; z-index: 90; opacity: 0; }
+      .subtitle-inner {
+        background: rgba(43, 41, 48, 0.78);
+        backdrop-filter: blur(24px) saturate(150%);
+        -webkit-backdrop-filter: blur(24px) saturate(150%);
+        border: 1px solid var(--md-outline-variant);
+        border-radius: 12px;
+        padding: 14px 28px;
+        color: var(--md-on-surface);
+        font-family: 'Pretendard Variable', sans-serif;
+        font-weight: 500; font-size: 44px; line-height: 1.3;
+        max-width: 1400px; text-align: center; white-space: pre-line;
+      }
+
+      /* ============================= S01 ============================= */
+      #scene-s01 .display { position: absolute; left: 50%; top: 48%; transform: translate(-50%,-50%); text-align: center; }
+      #scene-s01 .display-line { display: block; font-family: 'Google Sans Display','Inter',sans-serif; font-weight: 800; font-size: 280px; line-height: 0.95; letter-spacing: -0.04em;
+        background: var(--md-grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      #scene-s01 .display-line .letter { display: inline-block; opacity: 0; }
+      #scene-s01 .display-line.l2 { margin-top: -40px; }
+      #scene-s01 .subcopy { position: absolute; left: 50%; bottom: 220px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 12px;
+        font-family: 'Google Sans Text', sans-serif;
+        font-size: 30px; font-weight: 500; color: var(--md-on-surface-variant); opacity: 0; letter-spacing: 0.05em; }
+      #scene-s01 .subcopy .material-symbols-outlined { font-size: 32px; color: var(--md-tertiary); }
+      #scene-s01 .sparkle { position: absolute; top: 80px; left: 80px; opacity: 0; color: var(--md-primary); }
+      #scene-s01 .sparkle .material-symbols-outlined { font-size: 56px; }
+
+      /* ============================= S02 ============================= */
+      #scene-s02 .quote-card { position: absolute; left: 50%; top: 140px; transform: translateX(-50%); width: 1200px;
+        background: var(--md-surface-container-high); border: 1px solid var(--md-outline-variant);
+        border-radius: 28px; padding: 56px 64px; opacity: 0;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+      #scene-s02 .quote-text { font-family: 'Google Sans Display','Inter',sans-serif; font-style: italic; font-size: 38px; font-weight: 500;
+        line-height: 1.4; color: var(--md-on-surface); margin-bottom: 20px; }
+      #scene-s02 .quote-attr { display: flex; align-items: center; gap: 10px; font-family: 'Roboto Mono', monospace; font-size: 22px; color: var(--md-primary); }
+      #scene-s02 .quote-attr .material-symbols-outlined { font-size: 24px; }
+      #scene-s02 .flow { position: absolute; left: 50%; bottom: 240px; transform: translateX(-50%); display: flex; align-items: center; gap: 24px; }
+      #scene-s02 .flow-node {
+        font-family: 'Google Sans Text', sans-serif; font-size: 30px; font-weight: 600;
+        padding: 18px 32px; border-radius: 100px; opacity: 0;
+        display: flex; align-items: center; gap: 10px;
+      }
+      #scene-s02 .flow-node .material-symbols-outlined { font-size: 28px; }
+      #scene-s02 .flow-node.n1 { background: var(--md-primary-container); color: var(--md-on-primary-container); }
+      #scene-s02 .flow-node.n2 { background: var(--md-secondary-container); color: var(--md-on-secondary-container); }
+      #scene-s02 .flow-node.n3 { background: var(--md-surface-container-high); color: var(--md-on-surface); border: 1px solid var(--md-outline-variant); }
+      #scene-s02 .flow-node.n4 { background: var(--md-tertiary-container); color: var(--md-on-tertiary-container); }
+      #scene-s02 .flow-arrow { color: var(--md-on-surface-variant); }
+      #scene-s02 .flow-arrow .material-symbols-outlined { font-size: 32px; }
+
+      /* ============================= S03 ============================= */
+      #scene-s03 .title-top { position: absolute; top: 96px; left: 50%; transform: translateX(-50%);
+        font-family: 'Google Sans Display','Inter',sans-serif;
+        font-size: 80px; font-weight: 700; letter-spacing: -0.03em;
+        background: var(--md-grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0; }
+      #scene-s03 .bento { position: absolute; left: 80px; top: 280px; right: 80px; height: 680px;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+      #scene-s03 .bento-card {
+        background: var(--md-primary-container);
+        border-radius: 28px; padding: 56px;
+        opacity: 0; display: flex; flex-direction: column; justify-content: space-between;
+        color: var(--md-on-primary-container);
+      }
+      #scene-s03 .bento-card .material-symbols-outlined { font-size: 96px; color: var(--md-primary); }
+      #scene-s03 .bento-right { display: grid; grid-template-rows: 1fr 1fr; gap: 24px; }
+      #scene-s03 .bento-right > .sub { border-radius: 28px; padding: 48px; opacity: 0; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+      #scene-s03 .bento-right > .sub.elev {
+        background: var(--md-secondary-container); color: var(--md-on-secondary-container);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      }
+      #scene-s03 .bento-right > .sub.outl {
+        background: var(--md-surface); border: 2px solid var(--md-outline-variant); color: var(--md-on-surface);
+      }
+      #scene-s03 .bento-right .material-symbols-outlined { font-size: 64px; }
+      #scene-s03 .bento-right .sub.elev .material-symbols-outlined { color: var(--md-secondary); }
+      #scene-s03 .bento-right .sub.outl .material-symbols-outlined { color: var(--md-tertiary); }
+      #scene-s03 .bento-label { font-family: 'Roboto Mono', monospace; font-size: 22px; opacity: 0.75; letter-spacing: 0.05em; }
+      #scene-s03 .bento-title { font-family: 'Google Sans Display','Inter',sans-serif; font-size: 80px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.0; }
+      #scene-s03 .bento-right .bento-title { font-size: 48px; }
+      #scene-s03 .bento-desc { font-size: 26px; line-height: 1.4; opacity: 0.85; }
+
+      /* ============================= S04 ============================= */
+      #scene-s04 .title-top { position: absolute; top: 96px; left: 50%; transform: translateX(-50%);
+        font-family: 'Google Sans Display', sans-serif;
+        font-size: 56px; font-weight: 700; color: var(--md-on-surface); opacity: 0;
+        display: flex; align-items: center; gap: 16px;
+      }
+      #scene-s04 .title-top .material-symbols-outlined { font-size: 56px; color: var(--md-primary); }
+      #scene-s04 .tools-grid { position: absolute; left: 50%; top: 240px; transform: translateX(-50%);
+        display: grid; grid-template-columns: 560px 560px; grid-template-rows: 340px 340px; gap: 32px; }
+      #scene-s04 .tool-card { border-radius: 28px; padding: 40px 48px;
+        display: flex; flex-direction: column; justify-content: space-between; opacity: 0;
+        position: relative; overflow: hidden;
+      }
+      #scene-s04 .tool-card.v0 { background: var(--md-primary-container); color: var(--md-on-primary-container); }
+      #scene-s04 .tool-card.lovable { background: var(--md-tertiary-container); color: var(--md-on-tertiary-container); }
+      #scene-s04 .tool-card.cursor { background: var(--md-secondary-container); color: var(--md-on-secondary-container); }
+      #scene-s04 .tool-card.bolt { background: var(--md-surface-container-high); color: var(--md-on-surface); border: 1px solid var(--md-outline-variant); }
+      #scene-s04 .tool-row { display: flex; align-items: center; justify-content: space-between; }
+      #scene-s04 .tool-name { font-family: 'Google Sans Display', sans-serif; font-size: 76px; font-weight: 700; letter-spacing: -0.04em; }
+      #scene-s04 .tool-card.v0 .tool-icon { color: var(--md-primary); }
+      #scene-s04 .tool-card.lovable .tool-icon { color: var(--md-tertiary); }
+      #scene-s04 .tool-card.cursor .tool-icon { color: var(--md-secondary); }
+      #scene-s04 .tool-card.bolt .tool-icon { color: var(--md-accent-warning); }
+      #scene-s04 .tool-icon .material-symbols-outlined { font-size: 64px; }
+      #scene-s04 .tool-desc { font-size: 26px; font-weight: 500; line-height: 1.4; opacity: 0.85; }
+      #scene-s04 .tool-by {
+        display: inline-flex; align-items: center; gap: 6px;
+        margin-top: 8px;
+        font-family: 'Roboto Mono', monospace;
+        font-size: 18px; opacity: 0.6;
+      }
+
+      /* ============================= S05 (대폭 보강) ============================= */
+      #scene-s05 .stat-hero { position: absolute; left: 50%; top: 240px; transform: translateX(-50%);
+        font-family: 'Google Sans Display', sans-serif;
+        font-weight: 800; font-size: 360px; line-height: 0.9; letter-spacing: -0.06em;
+        background: var(--md-grad-stat); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0; }
+      #scene-s05 .stat-caption { position: absolute; left: 50%; top: 660px; transform: translateX(-50%);
+        font-size: 36px; font-weight: 500; color: var(--md-on-surface-variant); opacity: 0; letter-spacing: 0.02em; }
+
+      #scene-s05 .supporting-stats { position: absolute; left: 80px; top: 240px; width: 340px;
+        display: flex; flex-direction: column; gap: 16px; }
+      #scene-s05 .stat-card { background: var(--md-surface-container-high); border: 1px solid var(--md-outline-variant);
+        border-radius: 20px; padding: 24px; opacity: 0; }
+      #scene-s05 .stat-card-head { display: flex; align-items: center; gap: 12px; color: var(--md-on-surface-variant); font-size: 18px; font-weight: 500; letter-spacing: 0.05em; }
+      #scene-s05 .stat-card-head .material-symbols-outlined { font-size: 28px; }
+      #scene-s05 .stat-card.success .stat-card-head .material-symbols-outlined { color: var(--md-accent-success); }
+      #scene-s05 .stat-card.info .stat-card-head .material-symbols-outlined { color: var(--md-accent-info); }
+      #scene-s05 .stat-card.warning .stat-card-head .material-symbols-outlined { color: var(--md-accent-warning); }
+      #scene-s05 .stat-card-value { margin-top: 8px; font-family: 'Google Sans Display', sans-serif; font-size: 44px; font-weight: 700; line-height: 1.1; }
+      #scene-s05 .stat-card-label { margin-top: 4px; font-size: 18px; color: var(--md-on-surface-variant); }
+
+      #scene-s05 .bars { position: absolute; right: 80px; top: 720px; width: 1100px;
+        display: flex; flex-direction: column; gap: 16px; }
+      #scene-s05 .bar-row { display: flex; align-items: center; gap: 20px; }
+      #scene-s05 .bar-label { width: 200px; font-family: 'Google Sans Text', sans-serif; font-size: 22px; font-weight: 600; color: var(--md-on-surface-variant); text-align: right;
+        display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+      #scene-s05 .bar-label .material-symbols-outlined { font-size: 22px; }
+      #scene-s05 .bar-track { flex: 1; height: 28px; background: var(--md-surface-container-low); border-radius: 999px; overflow: hidden; }
+      #scene-s05 .bar-fill { height: 100%; width: 0%; border-radius: 999px; }
+      #scene-s05 .bar-traditional .bar-fill { background: var(--md-outline-variant); }
+      #scene-s05 .bar-vibe .bar-fill { background: var(--md-grad-stat); }
+      #scene-s05 .bar-time { width: 100px; font-family: 'Google Sans Display', sans-serif; font-size: 28px; font-weight: 700; color: var(--md-on-surface); }
+      #scene-s05 .source-note { position: absolute; bottom: 30px; right: 48px;
+        display: flex; align-items: center; gap: 6px;
+        font-family: 'Roboto Mono', monospace; font-size: 14px; color: var(--md-outline); font-style: italic; }
+
+      /* ============================= S06 ============================= */
+      #scene-s06 .compare { position: absolute; inset: 120px 80px 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+      #scene-s06 .col-header { font-family: 'Google Sans Display', sans-serif; font-size: 44px; font-weight: 700; margin-bottom: 32px; opacity: 0;
+        display: flex; align-items: center; gap: 12px; }
+      #scene-s06 .col-trad .col-header { color: var(--md-on-surface-variant); }
+      #scene-s06 .col-trad .col-header .material-symbols-outlined { color: var(--md-outline); }
+      #scene-s06 .col-vibe .col-header {
+        background: var(--md-grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      #scene-s06 .col-vibe .col-header .material-symbols-outlined { color: var(--md-primary); background: none; -webkit-text-fill-color: var(--md-primary); }
+      #scene-s06 .nodes { display: flex; flex-direction: column; gap: 12px; }
+      #scene-s06 .node { background: var(--md-surface-container-high); border: 1px solid var(--md-outline-variant); border-radius: 100px; padding: 16px 32px;
+        font-size: 26px; font-weight: 600; opacity: 0;
+        display: flex; align-items: center; gap: 12px; }
+      #scene-s06 .col-trad .node { color: var(--md-on-surface-variant); }
+      #scene-s06 .col-vibe .node { background: var(--md-primary-container); color: var(--md-on-primary-container); border: none; }
+      #scene-s06 .arrow { display: flex; justify-content: center; opacity: 0; }
+      #scene-s06 .col-trad .arrow { color: var(--md-outline); }
+      #scene-s06 .col-vibe .arrow { color: var(--md-primary); }
+      #scene-s06 .arrow .material-symbols-outlined { font-size: 28px; }
+      #scene-s06 .time-label { display: flex; align-items: center; gap: 10px;
+        font-family: 'Google Sans Display', sans-serif; font-size: 56px; font-weight: 800; margin-top: 24px; opacity: 0; }
+      #scene-s06 .col-trad .time-label { color: var(--md-on-surface-variant); }
+      #scene-s06 .col-vibe .time-label {
+        background: var(--md-grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      #scene-s06 .time-label .material-symbols-outlined { font-size: 40px; -webkit-text-fill-color: currentColor; }
+
+      /* ============================= S07 ============================= */
+      #scene-s07 .triptych { position: absolute; inset: 200px 80px 200px 80px; display: grid; grid-template-columns: 1fr 100px 1fr; gap: 32px; align-items: center; }
+      #scene-s07 .panel { border-radius: 28px; padding: 32px; height: 540px; display: flex; flex-direction: column; gap: 16px; opacity: 0; }
+      #scene-s07 .panel.left { background: var(--md-secondary-container); color: var(--md-on-secondary-container); }
+      #scene-s07 .panel.right { background: var(--md-primary-container); color: var(--md-on-primary-container); }
+      #scene-s07 .panel-label { display: flex; align-items: center; gap: 8px; font-family: 'Roboto Mono', monospace; font-size: 20px; opacity: 0.75; }
+      #scene-s07 .panel-label .material-symbols-outlined { font-size: 22px; }
+      #scene-s07 .figma-shapes { flex: 1; display: grid; grid-template-rows: auto 1fr auto; gap: 16px; }
+      #scene-s07 .figma-shape { border-radius: 16px; opacity: 0; }
+      #scene-s07 .figma-shape.s1 { height: 60px; background: rgba(208,188,255,0.30); }
+      #scene-s07 .figma-shape.s2 { background: rgba(239,184,200,0.20); }
+      #scene-s07 .figma-shape.s3 { height: 80px; background: rgba(168,199,250,0.25); }
+      #scene-s07 .arrow-big { display: flex; justify-content: center; align-items: center; color: var(--md-primary); opacity: 0; }
+      #scene-s07 .arrow-big .material-symbols-outlined { font-size: 96px; }
+      #scene-s07 .react-result { flex: 1; background: rgba(208,188,255,0.10); border: 1px solid rgba(208,188,255,0.2); border-radius: 16px;
+        padding: 24px; font-family: 'Roboto Mono', monospace; font-size: 22px; color: var(--md-on-primary-container); white-space: pre-wrap; }
+
+      /* ============================= S08 ============================= */
+      #scene-s08 .duo { position: absolute; inset: 240px 100px 240px 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+      #scene-s08 .prompt-box { background: var(--md-surface-container-high); border: 1px solid var(--md-outline-variant); border-radius: 28px;
+        padding: 48px; height: 480px; font-family: 'Roboto Mono', monospace; font-size: 30px; color: var(--md-primary);
+        line-height: 1.6; white-space: pre-wrap; opacity: 0; }
+      #scene-s08 .prompt-label { display: flex; align-items: center; gap: 10px;
+        font-family: 'Google Sans Text', sans-serif; font-size: 20px;
+        color: var(--md-on-surface-variant); margin-bottom: 24px; opacity: 0.8;
+      }
+      #scene-s08 .prompt-label .material-symbols-outlined { font-size: 22px; }
+      #scene-s08 .prompt-cursor { display: inline-block; width: 4px; height: 32px; background: var(--md-primary); margin-left: 4px; vertical-align: middle; animation: blink 1s infinite step-end; }
+      @keyframes blink { 50% { opacity: 0; } }
+      #scene-s08 .ui-result { background: var(--md-surface-container); border: 1px solid var(--md-primary); border-radius: 28px;
+        padding: 32px; height: 480px; opacity: 0; display: flex; flex-direction: column; gap: 16px; position: relative; }
+      #scene-s08 .ui-chip { position: absolute; top: -16px; right: 24px;
+        background: var(--md-primary-container); color: var(--md-on-primary-container);
+        font-family: 'Roboto Mono', monospace; font-size: 16px; font-weight: 600;
+        padding: 6px 14px; border-radius: 999px; display: flex; align-items: center; gap: 6px; opacity: 0;
+      }
+      #scene-s08 .ui-chip .material-symbols-outlined { font-size: 18px; color: var(--md-primary); }
+      #scene-s08 .ui-block { border-radius: 16px; }
+      #scene-s08 .ui-block.b1 { height: 56px; background: var(--md-primary-container); display: flex; align-items: center; padding: 0 16px; gap: 12px; color: var(--md-on-primary-container); font-size: 18px; font-weight: 600; }
+      #scene-s08 .ui-block.b1 .material-symbols-outlined { font-size: 24px; }
+      #scene-s08 .ui-block.b2 { flex: 1; background: linear-gradient(135deg,rgba(208,188,255,0.20),rgba(168,199,250,0.15)); }
+      #scene-s08 .ui-block.b3 { height: 80px; display: flex; gap: 12px; padding: 0; background: transparent; }
+      #scene-s08 .ui-stat { flex: 1; background: var(--md-surface-container-high); border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; }
+      #scene-s08 .ui-stat .material-symbols-outlined { font-size: 24px; color: var(--md-primary); }
+
+      /* ============================= S09 ============================= */
+      #scene-s09 .skills-stack { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+        display: flex; flex-direction: column; gap: 20px; width: 1100px; }
+      #scene-s09 .skill-chip { border-radius: 100px;
+        padding: 24px 48px; display: flex; align-items: center; gap: 32px; opacity: 0; }
+      #scene-s09 .skill-prompt { background: var(--md-primary-container); color: var(--md-on-primary-container); }
+      #scene-s09 .skill-eval { background: var(--md-secondary-container); color: var(--md-on-secondary-container); }
+      #scene-s09 .skill-system { background: var(--md-tertiary-container); color: var(--md-on-tertiary-container); }
+      #scene-s09 .skill-icon .material-symbols-outlined { font-size: 56px; }
+      #scene-s09 .skill-prompt .skill-icon { color: var(--md-primary); }
+      #scene-s09 .skill-eval .skill-icon { color: var(--md-secondary); }
+      #scene-s09 .skill-system .skill-icon { color: var(--md-tertiary); }
+      #scene-s09 .skill-text { display: flex; flex-direction: column; }
+      #scene-s09 .skill-name { font-family: 'Google Sans Display', sans-serif; font-size: 40px; font-weight: 700; letter-spacing: -0.02em; }
+      #scene-s09 .skill-desc { font-size: 22px; opacity: 0.85; margin-top: 4px; }
+
+      /* ============================= S10 ============================= */
+      #scene-s10 .warn-block { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); text-align: center; }
+      #scene-s10 .warn-icon { color: var(--md-accent-warning); opacity: 0; margin-bottom: 24px; display: inline-block; }
+      #scene-s10 .warn-icon .material-symbols-outlined { font-size: 120px; }
+      #scene-s10 .warn-title { font-family: 'Google Sans Display', sans-serif; font-size: 64px; font-weight: 700; color: var(--md-accent-warning); margin-bottom: 32px; opacity: 0; }
+      #scene-s10 .warn-list { list-style: none; font-size: 30px; color: var(--md-on-surface); line-height: 2.0; text-align: left; display: inline-block; }
+      #scene-s10 .warn-list li { opacity: 0; display: flex; align-items: center; gap: 14px; }
+      #scene-s10 .warn-list li .material-symbols-outlined { font-size: 28px; color: var(--md-accent-warning); }
+
+      /* ============================= S11 ============================= */
+      #scene-s11 .closing { position: absolute; left: 50%; top: 320px; transform: translateX(-50%); text-align: center;
+        font-family: 'Google Sans Display', sans-serif;
+        font-size: 96px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
+        background: var(--md-grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0; }
+      #scene-s11 .cta-card { position: absolute; left: 50%; top: 700px; transform: translateX(-50%); width: 640px;
+        background: var(--md-primary-container); color: var(--md-on-primary-container); border-radius: 28px; padding: 28px 40px;
+        display: flex; align-items: center; gap: 24px; opacity: 0;
+        box-shadow: 0 8px 32px rgba(208,188,255,0.20); }
+      #scene-s11 .cta-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--md-primary); color: var(--md-on-primary); display: flex; align-items: center; justify-content: center; }
+      #scene-s11 .cta-icon .material-symbols-outlined { font-size: 40px; }
+      #scene-s11 .cta-text { display: flex; flex-direction: column; }
+      #scene-s11 .cta-label { font-family: 'Roboto Mono', monospace; font-size: 16px; opacity: 0.7; letter-spacing: 0.1em; }
+      #scene-s11 .cta-title { font-family: 'Google Sans Display', sans-serif; font-size: 32px; font-weight: 700; margin-top: 2px; }
+    </style>
+  </head>
+  <body>
+    <div class="mesh-bg"></div>
+    <div class="logo-wm"><span class="material-symbols-outlined">school</span>AUTO E-LEARNING</div>
+
+    <div id="root" data-composition-id="main" data-start="0" data-duration="166.43" data-width="1920" data-height="1080">
+
+      <audio id="audio-main" class="clip" src="./assets/audio/video_audio.wav"
+        data-start="0" data-duration="166.43" data-track-index="0"
+        data-has-audio="true" data-volume="1.0"></audio>
+
+      <!-- S01 -->
+      <div id="scene-s01" class="scene">
+        <div class="sparkle"><span class="material-symbols-outlined">auto_awesome</span></div>
+        <div class="display">
+          <span class="display-line l1"><span class="letter">V</span><span class="letter">I</span><span class="letter">B</span><span class="letter">E</span></span>
+          <span class="display-line l2"><span class="letter">C</span><span class="letter">O</span><span class="letter">D</span><span class="letter">I</span><span class="letter">N</span><span class="letter">G</span></span>
+        </div>
+        <div class="subcopy"><span class="material-symbols-outlined">palette</span><span>DESIGNER EDITION</span></div>
+      </div>
+
+      <!-- S02 -->
+      <div id="scene-s02" class="scene">
+        <div class="quote-card">
+          <div class="quote-text">"Vibe coding... give in to the vibes, embrace exponentials, and forget that the code even exists."</div>
+          <div class="quote-attr"><span class="material-symbols-outlined">verified</span>@karpathy · 2025</div>
+        </div>
+        <div class="flow">
+          <div class="flow-node n1"><span class="material-symbols-outlined">chat</span>자연어</div>
+          <div class="flow-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
+          <div class="flow-node n2"><span class="material-symbols-outlined">auto_awesome</span>AI</div>
+          <div class="flow-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
+          <div class="flow-node n3"><span class="material-symbols-outlined">code</span>코드</div>
+          <div class="flow-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
+          <div class="flow-node n4"><span class="material-symbols-outlined">rocket_launch</span>결과</div>
+        </div>
+      </div>
+
+      <!-- S03 -->
+      <div id="scene-s03" class="scene">
+        <div class="title-top">디자이너에게 왜?</div>
+        <div class="bento">
+          <div class="bento-card" id="s03-card-speed">
+            <div>
+              <span class="material-symbols-outlined">speed</span>
+              <div class="bento-label" style="margin-top:24px">FIRST</div>
+              <div class="bento-title">속도</div>
+            </div>
+            <div class="bento-desc">Figma 시안이 몇 분 만에<br/>작동하는 UI로 바뀝니다.</div>
+          </div>
+          <div class="bento-right">
+            <div class="sub elev" id="s03-card-working">
+              <span class="material-symbols-outlined">bolt</span>
+              <div class="bento-label">SECOND</div>
+              <div class="bento-title">동작하는 시안</div>
+              <div class="bento-desc">실제 인터랙션으로 검증</div>
+            </div>
+            <div class="sub outl" id="s03-card-concept">
+              <span class="material-symbols-outlined">palette</span>
+              <div class="bento-label">THIRD</div>
+              <div class="bento-title">자율성</div>
+              <div class="bento-desc">개발자 없이 콘셉트 시연</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S04 -->
+      <div id="scene-s04" class="scene">
+        <div class="title-top"><span class="material-symbols-outlined">category</span>디자이너의 새 도구 4종</div>
+        <div class="tools-grid">
+          <div class="tool-card v0" id="s04-tool-v0">
+            <div class="tool-row">
+              <div class="tool-name">v0</div>
+              <span class="tool-icon"><span class="material-symbols-outlined">code</span></span>
+            </div>
+            <div>
+              <div class="tool-desc">UI 컴포넌트를<br/>한 번에</div>
+              <div class="tool-by"><span class="material-symbols-outlined" style="font-size:16px">verified</span>by Vercel</div>
+            </div>
+          </div>
+          <div class="tool-card lovable" id="s04-tool-lovable">
+            <div class="tool-row">
+              <div class="tool-name">Lovable</div>
+              <span class="tool-icon"><span class="material-symbols-outlined">favorite</span></span>
+            </div>
+            <div>
+              <div class="tool-desc">풀스택 웹 앱을<br/>통째로</div>
+              <div class="tool-by"><span class="material-symbols-outlined" style="font-size:16px">verified</span>design → ship</div>
+            </div>
+          </div>
+          <div class="tool-card cursor" id="s04-tool-cursor">
+            <div class="tool-row">
+              <div class="tool-name">Cursor</div>
+              <span class="tool-icon"><span class="material-symbols-outlined">terminal</span></span>
+            </div>
+            <div>
+              <div class="tool-desc">AI로 증강된<br/>코드 에디터</div>
+              <div class="tool-by"><span class="material-symbols-outlined" style="font-size:16px">verified</span>VS Code 기반</div>
+            </div>
+          </div>
+          <div class="tool-card bolt" id="s04-tool-bolt">
+            <div class="tool-row">
+              <div class="tool-name">Bolt</div>
+              <span class="tool-icon"><span class="material-symbols-outlined">bolt</span></span>
+            </div>
+            <div>
+              <div class="tool-desc">브라우저에서<br/>바로 실행</div>
+              <div class="tool-by"><span class="material-symbols-outlined" style="font-size:16px">verified</span>by StackBlitz</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S05 (대폭 보강) -->
+      <div id="scene-s05" class="scene">
+        <div class="stat-hero" id="s05-num-callout">10×</div>
+        <div class="stat-caption">프로토타입 제작 시간 단축</div>
+
+        <div class="supporting-stats">
+          <div class="stat-card success" id="s05-stat-1">
+            <div class="stat-card-head"><span class="material-symbols-outlined">trending_up</span>AI 코딩 도구 채택</div>
+            <div class="stat-card-value">+200%</div>
+            <div class="stat-card-label">YoY 2024 → 2025</div>
+          </div>
+          <div class="stat-card info" id="s05-stat-2">
+            <div class="stat-card-head"><span class="material-symbols-outlined">schedule</span>디자이너 코드 시간</div>
+            <div class="stat-card-value">−60%</div>
+            <div class="stat-card-label">단축 평균</div>
+          </div>
+          <div class="stat-card warning" id="s05-stat-3">
+            <div class="stat-card-head"><span class="material-symbols-outlined">rocket_launch</span>시안 → 배포</div>
+            <div class="stat-card-value">3일 → 30분</div>
+            <div class="stat-card-label">실측 사례</div>
+          </div>
+        </div>
+
+        <div class="bars">
+          <div class="bar-row bar-traditional">
+            <div class="bar-label"><span class="material-symbols-outlined">history</span>전통</div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+            <div class="bar-time" id="s05-time-trad">며칠</div>
+          </div>
+          <div class="bar-row bar-vibe">
+            <div class="bar-label"><span class="material-symbols-outlined">flash_on</span>바이브</div>
+            <div class="bar-track"><div class="bar-fill"></div></div>
+            <div class="bar-time" id="s05-time-vibe">분</div>
+          </div>
+        </div>
+        <div class="source-note"><span class="material-symbols-outlined" style="font-size:14px">info</span>Directional illustration · Industry reports 2025</div>
+      </div>
+
+      <!-- S06 -->
+      <div id="scene-s06" class="scene">
+        <div class="compare">
+          <div class="col-trad">
+            <div class="col-header"><span class="material-symbols-outlined">history</span>전통적인 흐름</div>
+            <div class="nodes" id="s06-trad-nodes">
+              <div class="node"><span class="material-symbols-outlined">palette</span>Figma 시안</div>
+              <div class="arrow"><span class="material-symbols-outlined">arrow_downward</span></div>
+              <div class="node"><span class="material-symbols-outlined">forward</span>개발자에게 전달</div>
+              <div class="arrow"><span class="material-symbols-outlined">arrow_downward</span></div>
+              <div class="node"><span class="material-symbols-outlined">build</span>빌드 / 구현</div>
+              <div class="arrow"><span class="material-symbols-outlined">arrow_downward</span></div>
+              <div class="node"><span class="material-symbols-outlined">verified</span>QA / 검증</div>
+            </div>
+            <div class="time-label"><span class="material-symbols-outlined">schedule</span>며칠</div>
+          </div>
+          <div class="col-vibe">
+            <div class="col-header"><span class="material-symbols-outlined">bolt</span>바이브 코딩</div>
+            <div class="nodes" id="s06-vibe-nodes">
+              <div class="node"><span class="material-symbols-outlined">chat</span>의도 (말로)</div>
+              <div class="arrow"><span class="material-symbols-outlined">arrow_downward</span></div>
+              <div class="node"><span class="material-symbols-outlined">auto_awesome</span>AI 생성</div>
+              <div class="arrow"><span class="material-symbols-outlined">arrow_downward</span></div>
+              <div class="node"><span class="material-symbols-outlined">rocket_launch</span>결과 확인</div>
+            </div>
+            <div class="time-label"><span class="material-symbols-outlined">timer</span>분 단위</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S07 -->
+      <div id="scene-s07" class="scene">
+        <div class="triptych">
+          <div class="panel left" id="s07-figma-mock">
+            <div class="panel-label"><span class="material-symbols-outlined">palette</span>Figma · design</div>
+            <div class="figma-shapes">
+              <div class="figma-shape s1"></div>
+              <div class="figma-shape s2"></div>
+              <div class="figma-shape s3"></div>
+            </div>
+          </div>
+          <div class="arrow-big" id="s07-arrow"><span class="material-symbols-outlined">arrow_forward</span></div>
+          <div class="panel right" id="s07-result-react">
+            <div class="panel-label"><span class="material-symbols-outlined">code</span>v0 · React + Tailwind</div>
+            <div class="react-result">&lt;Card&gt;
+  &lt;Header /&gt;
+  &lt;Stats /&gt;
+  &lt;CTA /&gt;
+&lt;/Card&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S08 -->
+      <div id="scene-s08" class="scene">
+        <div class="duo">
+          <div class="prompt-box" id="s08-prompt-box">
+            <div class="prompt-label"><span class="material-symbols-outlined">edit</span>PROMPT</div>
+            <span id="s08-prompt-text"></span><span class="prompt-cursor"></span>
+          </div>
+          <div class="ui-result" id="s08-ui-result">
+            <div class="ui-chip" id="s08-ui-chip"><span class="material-symbols-outlined">auto_awesome</span>Generated in 12s</div>
+            <div class="ui-block b1"><span class="material-symbols-outlined">menu</span>Dashboard</div>
+            <div class="ui-block b2"></div>
+            <div class="ui-block b3">
+              <div class="ui-stat"><span class="material-symbols-outlined">trending_up</span></div>
+              <div class="ui-stat"><span class="material-symbols-outlined">people</span></div>
+              <div class="ui-stat"><span class="material-symbols-outlined">payments</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S09 -->
+      <div id="scene-s09" class="scene">
+        <div class="skills-stack">
+          <div class="skill-chip skill-prompt" id="s09-skill-prompt">
+            <div class="skill-icon"><span class="material-symbols-outlined">auto_awesome</span></div>
+            <div class="skill-text">
+              <div class="skill-name">Prompt</div>
+              <div class="skill-desc">의도를 정확히 전달하는 능력</div>
+            </div>
+          </div>
+          <div class="skill-chip skill-eval" id="s09-skill-eval">
+            <div class="skill-icon"><span class="material-symbols-outlined">verified</span></div>
+            <div class="skill-text">
+              <div class="skill-name">Evaluation</div>
+              <div class="skill-desc">AI가 만든 결과를 평가하는 안목</div>
+            </div>
+          </div>
+          <div class="skill-chip skill-system" id="s09-skill-system">
+            <div class="skill-icon"><span class="material-symbols-outlined">dashboard_customize</span></div>
+            <div class="skill-text">
+              <div class="skill-name">Design System</div>
+              <div class="skill-desc">정의하고 유지하는 구조적 사고</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S10 -->
+      <div id="scene-s10" class="scene">
+        <div class="warn-block">
+          <div class="warn-icon" id="s10-warn-icon"><span class="material-symbols-outlined">warning</span></div>
+          <div class="warn-title" id="s10-warn-title">주의할 점</div>
+          <ul class="warn-list" id="s10-limit-list">
+            <li><span class="material-symbols-outlined">cancel</span>복잡한 비즈니스 로직</li>
+            <li><span class="material-symbols-outlined">cancel</span>보안 · 성능</li>
+            <li><span class="material-symbols-outlined">cancel</span>검증 없는 배포 금물</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S11 -->
+      <div id="scene-s11" class="scene">
+        <div class="closing" id="s11-closing-copy">디자인과 개발의<br/>경계가 녹아내리고 있어요.</div>
+        <div class="cta-card" id="s11-cta-card">
+          <div class="cta-icon"><span class="material-symbols-outlined">play_arrow</span></div>
+          <div class="cta-text">
+            <div class="cta-label">NEXT EPISODE</div>
+            <div class="cta-title">v0 실습 · 30분</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Global subtitle -->
+      <div id="subtitle-bar" class="subtitle-bar">
+        <div id="subtitle-text" class="subtitle-inner"></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const sub = document.querySelector("#subtitle-text");
+      const subBar = document.querySelector("#subtitle-bar");
+
+      // Scene activation
+      const scenes = [
+        { id: "#scene-s01", in: 0.00,   out: 10.60 },
+        { id: "#scene-s02", in: 10.60,  out: 26.37 },
+        { id: "#scene-s03", in: 26.37,  out: 46.91 },
+        { id: "#scene-s04", in: 46.91,  out: 63.52 },
+        { id: "#scene-s05", in: 63.52,  out: 77.39 },
+        { id: "#scene-s06", in: 77.39,  out: 99.28 },
+        { id: "#scene-s07", in: 99.28,  out: 116.32 },
+        { id: "#scene-s08", in: 116.32, out: 131.15 },
+        { id: "#scene-s09", in: 131.15, out: 145.76 },
+        { id: "#scene-s10", in: 145.76, out: 160.13 },
+        { id: "#scene-s11", in: 160.13, out: 166.43 }
+      ];
+      scenes.forEach(s => {
+        tl.set(s.id, { opacity: 1 }, s.in);
+        tl.set(s.id, { opacity: 0 }, s.out);
+      });
+
+      // S01
+      tl.fromTo("#scene-s01 .sparkle", { opacity: 0, rotate: -30 }, { opacity: 0.6, rotate: 0, duration: 0.8, ease: "power3.out" }, 0.20);
+      tl.fromTo("#scene-s01 .display-line.l1 .letter",
+        { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.05, ease: "back.out(1.4)" }, -0.010);   // @sync:s01-title-in
+      tl.fromTo("#scene-s01 .display-line.l2 .letter",
+        { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.05, ease: "back.out(1.4)" }, 1.40);
+      tl.fromTo("#scene-s01 .subcopy",
+        { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.40);
+      tl.to("#scene-s01 .display", { scale: 1.04, duration: 0.4, ease: "power2.out" }, 7.660);   // @sync:s01-keyword-bibe
+      tl.to("#scene-s01 .display", { scale: 1.0, duration: 0.4, ease: "power2.inOut" }, 8.60);
+
+      // S02
+      tl.fromTo("#scene-s02 .quote-card",
+        { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "back.out(1.2)" }, 13.840);   // @sync:s02-karpathy-in
+      tl.fromTo("#scene-s02 .flow-node.n1",
+        { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 16.800);   // @sync:s02-flow-start
+      tl.fromTo("#scene-s02 .flow-node.n2", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4 }, 17.60);
+      tl.fromTo("#scene-s02 .flow-node.n3", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4 }, 21.20);
+      tl.fromTo("#scene-s02 .flow-node.n4", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4 }, 22.50);
+
+      // S03
+      tl.fromTo("#scene-s03 .title-top",
+        { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5 }, 26.50);
+      tl.fromTo("#s03-card-speed",
+        { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.3)" }, 30.130);   // @sync:s03-reason-1
+      tl.fromTo("#s03-card-working",
+        { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.3)" }, 36.930);   // @sync:s03-reason-2
+      tl.fromTo("#s03-card-concept",
+        { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.3)" }, 42.100);   // @sync:s03-reason-3
+
+      // S04 (보강: 타이틀 일찍 + 카드 stagger)
+      tl.fromTo("#scene-s04 .title-top",
+        { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5 }, 47.10);
+      tl.fromTo("#s04-tool-v0",
+        { opacity: 0, y: 30, rotateX: -20 }, { opacity: 1, y: 0, rotateX: 0, duration: 0.55, ease: "back.out(1.4)" }, 50.400);   // @sync:s04-tool-v0
+      tl.fromTo("#s04-tool-lovable",
+        { opacity: 0, y: 30, rotateX: -20 }, { opacity: 1, y: 0, rotateX: 0, duration: 0.55, ease: "back.out(1.4)" }, 55.50);   // @sync:s04-tool-lovable
+      tl.fromTo("#s04-tool-cursor",
+        { opacity: 0, y: 30, rotateX: -20 }, { opacity: 1, y: 0, rotateX: 0, duration: 0.55, ease: "back.out(1.4)" }, 56.470);   // @sync:s04-tool-cursor
+      tl.fromTo("#s04-tool-bolt",
+        { opacity: 0, y: 30, rotateX: -20 }, { opacity: 1, y: 0, rotateX: 0, duration: 0.55, ease: "back.out(1.4)" }, 59.680);   // @sync:s04-tool-bolt
+
+      // S05 (대폭 보강)
+      // Supporting cards: 일찍 등장해서 빈 구간 채움
+      tl.fromTo("#s05-stat-1", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 64.20);
+      tl.fromTo("#s05-stat-2", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 65.50);
+      tl.fromTo("#s05-stat-3", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 66.80);
+      // Hero number with count-up
+      tl.fromTo("#s05-num-callout",
+        { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.6)" }, 72.580);   // @sync:s05-num-callout
+      // Count-up text
+      tl.fromTo("#s05-num-callout", { innerText: 0 }, { innerText: 10, duration: 1.0, ease: "power2.out",
+        snap: { innerText: 1 }, onUpdate: function() {
+          const el = document.querySelector("#s05-num-callout");
+          if (el) el.innerText = Math.round(this.targets()[0].innerText) + "×";
+        }}, 71.50);
+      tl.fromTo("#scene-s05 .stat-caption",
+        { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 72.50);
+      // Bar grow
+      tl.fromTo("#scene-s05 .bar-traditional .bar-fill",
+        { width: "0%" }, { width: "92%", duration: 0.9, ease: "power3.out" }, 73.880);   // @sync:s05-bars-start
+      tl.fromTo("#scene-s05 .bar-vibe .bar-fill",
+        { width: "0%" }, { width: "10%", duration: 0.5, ease: "back.out(1.4)" }, 74.50);
+
+      // S06
+      tl.fromTo("#scene-s06 .col-trad .col-header",
+        { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.4 }, 77.190);   // @sync:s06-traditional
+      tl.fromTo("#s06-trad-nodes > *",
+        { opacity: 0, scale: 0.95 }, { opacity: 0.85, scale: 1, duration: 0.4, stagger: 0.6, ease: "power2.out" }, 78.00);
+      tl.fromTo("#scene-s06 .col-trad .time-label",
+        { opacity: 0 }, { opacity: 1, duration: 0.4 }, 87.50);
+      tl.fromTo("#scene-s06 .col-vibe .col-header",
+        { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.4 }, 88.860);   // @sync:s06-vibe-flow
+      tl.fromTo("#s06-vibe-nodes > *",
+        { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, stagger: 0.18, ease: "back.out(1.3)" }, 93.50);
+      tl.fromTo("#scene-s06 .col-vibe .time-label",
+        { opacity: 0 }, { opacity: 1, duration: 0.4 }, 96.50);
+
+      // S07
+      tl.fromTo("#s07-figma-mock",
+        { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 101.730);   // @sync:s07-figma
+      tl.fromTo("#scene-s07 .figma-shape",
+        { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.2 }, 100.50);
+      tl.fromTo("#s07-arrow",
+        { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 103.50);
+      tl.fromTo("#s07-result-react",
+        { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.6, ease: "back.out(1.3)" }, 108.120);   // @sync:s07-result
+
+      // S08
+      tl.fromTo("#s08-prompt-box",
+        { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5 }, 117.00);
+      tl.to("#s08-prompt-text",
+        { text: "대시보드를 만들어 줘.\n다크 모드 반응형으로.", duration: 4.0, ease: "none" }, 118.660);   // @sync:s08-prompt-typing
+      tl.fromTo("#s08-ui-result",
+        { opacity: 0, y: 40, rotateY: -10 }, { opacity: 1, y: 0, rotateY: 0, duration: 0.8, ease: "back.out(1.3)" }, 127.070);   // @sync:s08-ui-appear
+      tl.fromTo("#s08-ui-chip",
+        { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.5)" }, 127.30);
+
+      // S09
+      tl.fromTo("#s09-skill-prompt",
+        { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 136.960);   // @sync:s09-skill-1
+      tl.fromTo("#s09-skill-eval",
+        { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 139.270);   // @sync:s09-skill-2
+      tl.fromTo("#s09-skill-system",
+        { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 142.210);   // @sync:s09-skill-3
+
+      // S10
+      tl.fromTo("#s10-warn-icon",
+        { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.5)" }, 145.560);   // @sync:s10-warn-in
+      tl.fromTo("#s10-warn-title",
+        { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.4 }, 146.60);
+      tl.fromTo("#s10-limit-list > li",
+        { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.8, ease: "power2.out" }, 148.00);
+
+      // S11
+      tl.fromTo("#s11-closing-copy",
+        { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 159.300);   // @sync:s11-closing
+      tl.fromTo("#s11-cta-card",
+        { opacity: 0, y: 30, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.2)" }, 162.080);   // @sync:s11-cta-card
+
+      // Subtitle text swaps
+      tl.to(subBar, { opacity: 1, duration: 0.2 }, 0.0);
+      tl.set(sub, { innerText: "디자이너가 코드 한 줄 안 쓰고" }, 0.0);
+      tl.set(sub, { innerText: "실제 동작하는 웹사이트를 만든다면?" }, 3.5);
+      tl.set(sub, { innerText: "요즘 이걸 바이브 코딩이라고 부릅니다." }, 6.96);
+      tl.set(sub, { innerText: "바이브 코딩은 2025년" }, 10.77);
+      tl.set(sub, { innerText: "AI 연구자 카파시가" }, 12.80);
+      tl.set(sub, { innerText: "처음 이름 붙인 개념인데요." }, 14.92);
+      tl.set(sub, { innerText: "자연어로 원하는 분위기를 전달하면\nAI가 코드를 만들고," }, 17.00);
+      tl.set(sub, { innerText: "결과를 보면서 다시 말로 다듬는 방식이에요." }, 22.32);
+      tl.set(sub, { innerText: "이게 디자이너에게 왜 중요할까요?" }, 26.37);
+      tl.set(sub, { innerText: "첫째, 속도예요." }, 30.50);
+      tl.set(sub, { innerText: "Figma 시안이 몇 분 만에\n작동하는 UI로 바뀌고요." }, 32.00);
+      tl.set(sub, { innerText: "둘째, 동작하는 시안으로 검증할 수 있어요." }, 38.00);
+      tl.set(sub, { innerText: "셋째, 개발자 없이도 콘셉트를 보여줄 수 있죠." }, 42.00);
+      tl.set(sub, { innerText: "디자이너가 지금 당장 쓸 수 있는 도구는\n네 가지예요." }, 46.91);
+      tl.set(sub, { innerText: "v0는 UI 컴포넌트를 한 번에." }, 51.00);
+      tl.set(sub, { innerText: "Lovable은 풀스택 웹 앱을 통째로." }, 55.00);
+      tl.set(sub, { innerText: "Cursor는 코드 에디터를 AI로 증강했고요." }, 58.50);
+      tl.set(sub, { innerText: "Bolt는 브라우저에서 바로 실행되죠." }, 61.50);
+      tl.set(sub, { innerText: "실제로 2025년 AI 코딩 도구 시장은" }, 63.52);
+      tl.set(sub, { innerText: "일 년 전 대비 가파르게 성장했고요." }, 67.50);
+      tl.set(sub, { innerText: "프로토타입 제작 시간은 10배 가까이" }, 70.88);
+      tl.set(sub, { innerText: "짧아진다는 보고가 잇따르고 있어요." }, 74.00);
+      tl.set(sub, { innerText: "전통적인 흐름을 볼게요." }, 77.39);
+      tl.set(sub, { innerText: "디자이너가 Figma로 시안을 만들고," }, 80.00);
+      tl.set(sub, { innerText: "개발자에게 넘기고, 빌드하고," }, 84.00);
+      tl.set(sub, { innerText: "검증까지 며칠이 걸려요." }, 88.00);
+      tl.set(sub, { innerText: "바이브 코딩은요." }, 91.50);
+      tl.set(sub, { innerText: "디자이너가 말로 의도를 던지면,\nAI가 만들고 바로 확인할 수 있어요." }, 94.00);
+      tl.set(sub, { innerText: "간단한 사례를 볼까요." }, 99.28);
+      tl.set(sub, { innerText: "Figma에서 디자인을 복사하고," }, 102.00);
+      tl.set(sub, { innerText: "v0에 붙여넣기만 해도," }, 105.50);
+      tl.set(sub, { innerText: "움직이는 리액트 컴포넌트가 바로 나옵니다." }, 109.00);
+      tl.set(sub, { innerText: "디자이너가 만든 그 디자인 그대로." }, 113.00);
+      tl.set(sub, { innerText: "디자인 시안조차 없어도 돼요." }, 116.32);
+      tl.set(sub, { innerText: "\"대시보드를 만들어 줘.\"" }, 119.50);
+      tl.set(sub, { innerText: "\"다크 모드 반응형으로.\"" }, 122.50);
+      tl.set(sub, { innerText: "이렇게 한 줄만 던지면" }, 125.50);
+      tl.set(sub, { innerText: "AI가 컴포넌트부터 레이아웃까지 만들어 줘요." }, 128.00);
+      tl.set(sub, { innerText: "디자이너에게 새로 필요한 스킬도 있어요." }, 131.15);
+      tl.set(sub, { innerText: "의도를 정확히 전달하는 프롬프트." }, 134.50);
+      tl.set(sub, { innerText: "AI가 만든 결과를 평가하는 안목." }, 138.00);
+      tl.set(sub, { innerText: "디자인 시스템을 명확히 정의하는 능력이에요." }, 142.00);
+      tl.set(sub, { innerText: "물론 한계도 있어요." }, 145.76);
+      tl.set(sub, { innerText: "복잡한 비즈니스 로직, 보안, 성능은" }, 148.50);
+      tl.set(sub, { innerText: "여전히 개발자 영역이고요." }, 153.00);
+      tl.set(sub, { innerText: "검증 없이 그대로 배포하는 건 금물입니다." }, 156.00);
+      tl.set(sub, { innerText: "디자인과 개발의 경계가 녹아내리고 있어요." }, 160.13);
+      tl.set(sub, { innerText: "다음 영상에서, v0 실습 한번 해볼까요?" }, 164.00);
+      tl.to(subBar, { opacity: 0, duration: 0.3 }, 166.10);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

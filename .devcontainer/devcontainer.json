@@ -1,0 +1,54 @@
+{
+  "name": "Auto E-learning",
+  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.13"
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/postCreate.sh",
+
+  "forwardPorts": [3002, 3003, 3004],
+  "portsAttributes": {
+    "3002": {
+      "label": "Hyperframes Studio",
+      "onAutoForward": "openBrowser"
+    },
+    "3003": {
+      "label": "Hyperframes Studio (alt)",
+      "onAutoForward": "ignore"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "GitHub.copilot",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        "editor.formatOnSave": false,
+        "files.encoding": "utf8",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  "remoteEnv": {
+    "WHISPER_MODEL_DIR": "/home/codespace/.cache/whisper-models"
+  },
+
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb",
+    "storage": "32gb"
+  }
+}
