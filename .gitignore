@@ -31,27 +31,21 @@ npm-debug.log*
 .npm/
 /tmp/
 
-# ===== Large media binaries (재생성 가능) =====
-# 원본 녹음 (재녹음 가능)
-**/04_녹음/원본/*.mp4
-**/04_녹음/원본/*.mp3
-**/04_녹음/원본/*.mov
-**/04_녹음/원본/*.m4a
-**/04_녹음/원본/*.wav
-
+# ===== 재생성 가능한 산출물 (LFS도 안 함, ignore) =====
 # 가공된 wav (ffmpeg로 재생성 가능)
 **/04_녹음/가공/*.wav
 
 # Hyperframes assets/audio (재생성 가능)
 **/06_편집/hyperframes/assets/audio/*.wav
 
-# 프리뷰·렌더 결과물 (재렌더 가능)
+# 프리뷰 (Studio 재실행으로 재생성)
 **/06_편집/프리뷰/*.mp4
 **/06_편집/프리뷰/*.mov
-**/07_최종/마스터/*.mp4
-**/07_최종/마스터/*.mov
-**/07_최종/납품/*.mp4
-**/07_최종/납품/*.mov
+
+# Whisper 입력용 변환 결과 (재생성 가능)
+**/whisper_input.wav
+
+# 참고: 원본 mp4/mp3/m4a/mov 와 최종 마스터·납품은 .gitattributes 의 Git LFS로 트래킹
 
 # 백업 파일
 **/*.bak

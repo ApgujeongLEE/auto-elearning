@@ -1,0 +1,32 @@
+# ============================================================
+# Git LFS — 대용량 미디어 파일 트래킹
+# ============================================================
+# 원본 녹음 (재녹음 어려움 — 반드시 동기화)
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.m4a filter=lfs diff=lfs merge=lfs -text
+*.mov filter=lfs diff=lfs merge=lfs -text
+
+# 마스터 / 최종 렌더 (재렌더 가능하지만 시간 절약 위해)
+**/07_최종/마스터/* filter=lfs diff=lfs merge=lfs -text
+**/07_최종/납품/* filter=lfs diff=lfs merge=lfs -text
+
+# 이미지·일러스트 (PNG 큰 파일)
+**/05_에셋/**/*.png filter=lfs diff=lfs merge=lfs -text
+**/05_에셋/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+**/05_에셋/**/*.pptx filter=lfs diff=lfs merge=lfs -text
+
+# 폰트 (재사용 자산)
+공용자산/폰트/* filter=lfs diff=lfs merge=lfs -text
+
+# 로고 (큰 파일)
+공용자산/브랜드/로고/* filter=lfs diff=lfs merge=lfs -text
+
+# BGM / SFX 라이브러리
+공용자산/BGM라이브러리/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
+공용자산/BGM라이브러리/**/*.wav filter=lfs diff=lfs merge=lfs -text
+공용자산/효과음라이브러리/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
+공용자산/효과음라이브러리/**/*.wav filter=lfs diff=lfs merge=lfs -text
+
+# 참고: .wav 가공 산출물(분할 wav, full_audio_clean)은 ffmpeg로 재생성 가능하므로
+#       .gitignore에 남겨둠 (LFS 트래킹 X). 원본만 LFS로 동기화.
