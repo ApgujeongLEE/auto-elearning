@@ -3,6 +3,9 @@
 # Large binaries, caches, environment-specific files
 # ============================================================
 
+# Claude Code 개인 설정 (PC별로 다름)
+.claude/settings.local.json
+
 # Node / Hyperframes
 **/node_modules/
 **/.next/
